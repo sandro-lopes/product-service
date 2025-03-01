@@ -1,13 +1,18 @@
 package com.codingbetter.product.domain.model;
 
-public class CategoryId {
-    private final Integer categoryId;
+import java.util.UUID;
 
-    public CategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+public class CategoryId {
+    private final UUID categoryId;
+
+    public CategoryId(UUID categoryId) {
+        if (categoryId == null) {
+            throw new IllegalArgumentException("Category ID is required");
+        }
+        this.categoryId = categoryId;   
     }
 
-    public Integer getCategoryId() {
+    public UUID getValue() {
         return categoryId;
     }
 }

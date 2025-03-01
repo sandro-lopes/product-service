@@ -1,14 +1,19 @@
 package com.codingbetter.product.domain.model;
 
+import java.net.URL;
+
 public class Image {
 
-    private final String url;
+    private final URL url;
 
-    public Image(String url) {
+    public Image(URL url) {
+        if (url == null) {
+            throw new IllegalArgumentException("URL is required");
+        }
         this.url = url;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 }

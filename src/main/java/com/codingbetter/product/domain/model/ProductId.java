@@ -1,13 +1,15 @@
 package com.codingbetter.product.domain.model;
 
+import java.util.UUID;
+
 public class ProductId {
 
-    private final int id;
+    private final UUID id;
 
-    public ProductId(int id) {
-        this.id = id;
+    public ProductId() {
+        this.id = UUID.randomUUID();
     }
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 }

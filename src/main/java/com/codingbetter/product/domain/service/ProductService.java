@@ -1,10 +1,7 @@
 package com.codingbetter.product.domain.service;
 
-import com.codingbetter.product.domain.model.Product;
-
-import java.util.UUID;
+import com.codingbetter.product.domain.model.Sku;
 
 public interface ProductService {
-    void validate(Product product);
-    boolean checkAvailability(UUID productId);
+    boolean skuExists(Sku sku);
 }
