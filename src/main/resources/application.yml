@@ -1,0 +1,16 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: Product Service
+    cloud:
+        azure:
+            cosmos:
+                endpoint: ${AZURE_COSMOS_ENDPOINT}
+                database: ${COSMOS_DATABASE}
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
