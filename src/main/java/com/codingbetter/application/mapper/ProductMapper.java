@@ -1,6 +1,7 @@
 package com.codingbetter.application.mapper;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.net.URL;
 import java.util.Currency;
 import java.util.List;
@@ -14,7 +15,8 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.codingbetter.application.controller.request.CreateProductRequest;
-import com.codingbetter.application.controller.response.CreateProductResponse;
+import com.codingbetter.application.controller.response.ProductResponse;
+import com.codingbetter.application.controller.response.ProductResponse;
 import com.codingbetter.domain.catalog.category.model.CategoryId;
 import com.codingbetter.domain.catalog.product.model.Image;
 import com.codingbetter.domain.catalog.product.model.Money;
@@ -41,9 +43,10 @@ public interface ProductMapper {
     @Mapping(target = "price", source = "price.amount", qualifiedByName = "bigDecimalToString")
     @Mapping(target = "currency", source = "price.currency.currencyCode")
     @Mapping(target = "categoryId", source = "categoryId", qualifiedByName = "categoryIdToString")
-    @Mapping(target = "images", ignore = true)
-    @Mapping(target = "specifications", ignore = true)
-    CreateProductResponse toResponse(Product product);
+    @Mapping(target = "images", source = "images", qualifiedByName = "imagesToUrls")
+    @Mapping(target = "specifications", source = "specifications", qualifiedByName = "specificationsToMap")
+    ProductResponse toResponse(Product product);
+
 
     /**
      * Converts a CreateProductRequest DTO to a Product domain entity.
@@ -65,6 +68,8 @@ public interface ProductMapper {
                     new CategoryId(request.getCategoryId())
                 )
                 .withStatus(ProductStatus.DRAFT)
+                .withImages(request.getImages().stream().map(url -> new Image(URI.create(url))).collect(Collectors.toList()))
+                .withSpecifications(request.getSpecifications().entrySet().stream().map(entry -> new Specification(entry.getKey(), entry.getValue())).collect(Collectors.toList()))
                 .build();
     }
 

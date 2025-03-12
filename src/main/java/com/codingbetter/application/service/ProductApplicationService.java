@@ -4,10 +4,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codingbetter.application.controller.request.CreateProductRequest;
-import com.codingbetter.application.controller.response.CreateProductResponse;
+import com.codingbetter.application.controller.response.ProductResponse;
+import com.codingbetter.application.controller.response.PageResponse;
+import com.codingbetter.application.mapper.PageMapper;
 import com.codingbetter.application.mapper.ProductMapper;
 import com.codingbetter.application.usecase.ActivateProductUseCase;
 import com.codingbetter.application.usecase.CreateProductUseCase;
+import com.codingbetter.application.usecase.SearchProductsUseCase;
 import com.codingbetter.domain.catalog.product.exception.ProductNotFoundException;
 import com.codingbetter.domain.catalog.product.model.Image;
 import com.codingbetter.domain.catalog.product.model.Money;
@@ -16,15 +19,16 @@ import com.codingbetter.domain.catalog.product.model.ProductId;
 import com.codingbetter.domain.catalog.product.model.Specification;
 import com.codingbetter.domain.catalog.product.repository.ProductRepository;
 import com.codingbetter.domain.shared.event.DomainEventPublisher;
+import com.codingbetter.domain.shared.model.Page;
 
 import java.util.UUID;
 
 @Service
-public class ProductApplicationService implements CreateProductUseCase, ActivateProductUseCase {
+public class ProductApplicationService implements CreateProductUseCase, ActivateProductUseCase, SearchProductsUseCase {
     private final ProductRepository productRepository;
     private final DomainEventPublisher eventPublisher;
     private final ProductMapper productMapper;
-    
+
     public ProductApplicationService(ProductRepository productRepository, DomainEventPublisher eventPublisher, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.eventPublisher = eventPublisher;
@@ -33,21 +37,27 @@ public class ProductApplicationService implements CreateProductUseCase, Activate
 
     @Override
     @Transactional
-    public CreateProductResponse createProduct(CreateProductRequest request) {
+    public ProductResponse createProduct(CreateProductRequest request) {
         Product newProduct = productMapper.toEntity(request);
         productRepository.save(newProduct);
         publishDomainEvents(newProduct);
         return productMapper.toResponse(newProduct);
     }
 
-    public void updatePrice(ProductId productId, Money newPrice) {
-        executeAndPublishEvents(productId, product -> product.updatePrice(newPrice));
-    }
-
     @Override
     @Transactional
     public void activateProduct(UUID productId) {
         executeAndPublishEvents(new ProductId(productId), Product::activate);
+    }
+
+    @Override
+    public PageResponse<ProductResponse> searchAllProducts(int page, int size) {
+        Page<Product> products = productRepository.findAll(page, size);
+        return PageMapper.toResponse(products, productMapper::toResponse);
+    }
+
+    public void updatePrice(ProductId productId, Money newPrice) {
+        executeAndPublishEvents(productId, product -> product.updatePrice(newPrice));
     }
 
     public void deactivate(ProductId productId) {

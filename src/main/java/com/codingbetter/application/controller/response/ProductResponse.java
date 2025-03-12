@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateProductResponse {
+public class ProductResponse {
     private UUID id;
     private String sku;
     private String name;
