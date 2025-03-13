@@ -1,0 +1,234 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-03-09T18:20:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_create_product",
+      "parentId": "fld_products",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "url": "{{ _.baseUrl }}/api/products",
+      "name": "Create Product",
+      "description": "Creates a new product",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sku\": \"SKU-12345678\",\n  \"name\": \"Smartphone XYZ\",\n  \"description\": \"Latest smartphone with amazing features\",\n  \"categoryId\": \"{{ _.categoryId }}\",\n  \"price\": 999.99,\n  \"currency\": \"USD\",\n  \"quantity\": 100,\n  \"status\": \"ACTIVE\",\n  \"images\": [\n    {\n      \"url\": \"https://example.com/images/smartphone1.jpg\"\n    },\n    {\n      \"url\": \"https://example.com/images/smartphone2.jpg\"\n    }\n  ],\n  \"specifications\": [\n    {\n      \"name\": \"Color\",\n      \"value\": \"Black\"\n    },\n    {\n      \"name\": \"Storage\",\n      \"value\": \"128GB\"\n    },\n    {\n      \"name\": \"RAM\",\n      \"value\": \"8GB\"\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1000000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_products",
+      "parentId": "wrk_product_service",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "name": "Products",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1000000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_product_service",
+      "parentId": null,
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "name": "Product Service",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_get_product",
+      "parentId": "fld_products",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "url": "{{ _.baseUrl }}/api/products/{{ _.productId }}",
+      "name": "Get Product",
+      "description": "Gets a product by ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -900000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_product",
+      "parentId": "fld_products",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "url": "{{ _.baseUrl }}/api/products/{{ _.productId }}",
+      "name": "Update Product",
+      "description": "Updates an existing product",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sku\": \"SKU-12345678\",\n  \"name\": \"Smartphone XYZ - Updated\",\n  \"description\": \"Latest smartphone with amazing features and more\",\n  \"categoryId\": \"{{ _.categoryId }}\",\n  \"price\": 899.99,\n  \"currency\": \"USD\",\n  \"quantity\": 150,\n  \"status\": \"ACTIVE\",\n  \"images\": [\n    {\n      \"url\": \"https://example.com/images/smartphone1.jpg\"\n    },\n    {\n      \"url\": \"https://example.com/images/smartphone2.jpg\"\n    },\n    {\n      \"url\": \"https://example.com/images/smartphone3.jpg\"\n    }\n  ],\n  \"specifications\": [\n    {\n      \"name\": \"Color\",\n      \"value\": \"Black\"\n    },\n    {\n      \"name\": \"Storage\",\n      \"value\": \"128GB\"\n    },\n    {\n      \"name\": \"RAM\",\n      \"value\": \"8GB\"\n    },\n    {\n      \"name\": \"Battery\",\n      \"value\": \"5000mAh\"\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -800000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_product",
+      "parentId": "fld_products",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "url": "{{ _.baseUrl }}/api/products/{{ _.productId }}",
+      "name": "Delete Product",
+      "description": "Deletes a product",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -700000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_list_products",
+      "parentId": "fld_products",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "url": "{{ _.baseUrl }}/api/products",
+      "name": "List Products",
+      "description": "Lists all products with pagination",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "0",
+          "description": "Page number (zero-based)",
+          "id": "pair_page"
+        },
+        {
+          "name": "size",
+          "value": "10",
+          "description": "Page size",
+          "id": "pair_size"
+        },
+        {
+          "name": "sort",
+          "value": "name,asc",
+          "description": "Sort field and direction",
+          "id": "pair_sort"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -600000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_product_service",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "http://localhost:8080",
+        "productId": "00000000-0000-0000-0000-000000000000",
+        "categoryId": "00000000-0000-0000-0000-000000000000"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl",
+          "productId",
+          "categoryId"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1709999999999,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_development",
+      "parentId": "env_base",
+      "modified": 1709999999999,
+      "created": 1709999999999,
+      "name": "Development",
+      "data": {},
+      "dataPropertyOrder": null,
+      "color": "#7d69cb",
+      "isPrivate": false,
+      "metaSortKey": 1709999999999,
+      "_type": "environment"
+    }
+  ]
+} 
