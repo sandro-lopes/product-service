@@ -11,7 +11,9 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("Specification Tests")
 class SpecificationTest {
@@ -215,6 +217,17 @@ class SpecificationTest {
         assertEquals(specification1.getValue(), specification2.getValue());
     }
     
+    @ParameterizedTest
+    @MethodSource("provideInvalidNames")
+    @DisplayName("Should throw exception for invalid names")
+    void shouldThrowExceptionForInvalidNames(String invalidName, String expectedMessage) {
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> new Specification(invalidName, VALID_VALUE)
+        );
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+    
     private static Stream<Arguments> provideInvalidNames() {
         return Stream.of(
                 Arguments.of(null, "Name of specification is required"),
@@ -223,6 +236,17 @@ class SpecificationTest {
         );
     }
     
+    @ParameterizedTest
+    @MethodSource("provideInvalidValues")
+    @DisplayName("Should throw exception for invalid values")
+    void shouldThrowExceptionForInvalidValues(String invalidValue, String expectedMessage) {
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> new Specification(VALID_NAME, invalidValue)
+        );
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
     private static Stream<Arguments> provideInvalidValues() {
         return Stream.of(
                 Arguments.of(null, "Value of specification is required"),

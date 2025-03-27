@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.codingbetter.infrastructure.persistence.repository")
@@ -25,11 +26,13 @@ public class MongoDBConfig extends AbstractMongoClientConfiguration {
     private String databaseName;
 
     @Override
+    @NonNull
     protected String getDatabaseName() {
         return databaseName;
     }
 
     @Override
+    @NonNull
     public MongoClient mongoClient() {
         logger.info("Configuring MongoDB connection using URI: {}", mongoUri.replaceAll(":[^/]+@", ":****@"));
         ConnectionString connectionString = new ConnectionString(mongoUri);
