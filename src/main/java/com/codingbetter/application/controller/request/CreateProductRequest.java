@@ -1,0 +1,29 @@
+package com.codingbetter.application.controller.request;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreateProductRequest {
+    private String sku;
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private String currency;
+    private UUID categoryId;
+    private List<String>images;
+    private Map<String, String> specifications;
+}
+
+

@@ -1,0 +1,39 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: Product Service
+    main:
+        allow-bean-definition-overriding: true
+    data:
+        mongodb:
+            uri: mongodb://admin:password@localhost:27017/productTestDB?authSource=admin
+            host: localhost
+            port: 27017
+            database: productTestDB
+            username: admin
+            password: password
+            authentication-database: admin
+
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+        publisher-confirm-type: correlated
+        publisher-returns: true
+        template:
+            mandatory: true
+        listener:
+            simple:
+                acknowledge-mode: manual
+                prefetch: 1
+                default-requeue-rejected: true
+
+logging:
+    level:
+        org.springframework.data.mongodb: DEBUG
+        com.codingbetter: DEBUG
+        org.springframework: INFO
+        org.springframework.amqp: DEBUG
