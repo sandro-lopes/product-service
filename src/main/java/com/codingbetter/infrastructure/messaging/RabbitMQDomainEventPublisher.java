@@ -5,10 +5,6 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
-import com.codingbetter.domain.catalog.product.event.ProductActivatedEvent;
-import com.codingbetter.domain.catalog.product.event.ProductDeactivatedEvent;
-import com.codingbetter.domain.catalog.product.event.ProductDiscontinuedEvent;
-import com.codingbetter.domain.catalog.product.event.ProductPriceChangedEvent;
 import com.codingbetter.domain.catalog.product.model.ProductId;
 import com.codingbetter.domain.shared.event.DomainEvent;
 import com.codingbetter.domain.shared.event.DomainEventPublisher;
@@ -35,10 +31,7 @@ public class RabbitMQDomainEventPublisher implements DomainEventPublisher {
     private final ObjectMapper objectMapper;
     private final EventRoutingStrategyFactory routingStrategyFactory;
     
-    public RabbitMQDomainEventPublisher(
-            RabbitTemplate rabbitTemplate, 
-            ObjectMapper objectMapper,
-            EventRoutingStrategyFactory routingStrategyFactory) {
+    public RabbitMQDomainEventPublisher(RabbitTemplate rabbitTemplate, ObjectMapper objectMapper, EventRoutingStrategyFactory routingStrategyFactory) {
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
         this.routingStrategyFactory = routingStrategyFactory;
@@ -59,10 +52,8 @@ public class RabbitMQDomainEventPublisher implements DomainEventPublisher {
         try {
             String message = objectMapper.writeValueAsString(event);
             String routingKey = determineRoutingKey(event);
-            if (routingKey != null) {
-                rabbitTemplate.convertAndSend(ProductRabbitMQConfig.EXCHANGE_NAME, routingKey, message);
-                log.info("Event published to RabbitMQ: exchange={}, routingKey={}", ProductRabbitMQConfig.EXCHANGE_NAME, routingKey);
-            }
+            rabbitTemplate.convertAndSend(ProductRabbitMQConfig.EXCHANGE_NAME, routingKey, message);
+            log.info("Event published to RabbitMQ: exchange={}, routingKey={}", ProductRabbitMQConfig.EXCHANGE_NAME, routingKey);
         } catch (JsonProcessingException e) {
             log.error("Error serializing domain event", e);
             throw new RuntimeException("Error serializing domain event", e);
@@ -72,11 +63,9 @@ public class RabbitMQDomainEventPublisher implements DomainEventPublisher {
     private String determineRoutingKey(DomainEvent event) {
         EventRoutingStrategy strategy = routingStrategyFactory.getStrategy(event);
         
-        if (strategy != null) {
-            return strategy.getRoutingKey(event);
+        if (strategy == null) {
+            throw new RuntimeException("Unknown event type: " + event.getClass().getName());
         }
-        
-        log.warn("Unknown event type: {}", event.getClass().getName());
-        return null;
+        return strategy.getRoutingKey(event);
     }
 } 

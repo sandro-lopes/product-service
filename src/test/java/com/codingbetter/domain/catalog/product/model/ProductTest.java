@@ -81,7 +81,7 @@ class ProductTest {
         @DisplayName("Should create product successfully")
         void shouldCreateProductSuccessfully() {
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -101,7 +101,7 @@ class ProductTest {
         @DisplayName("Should create product successfully with a generated id")
         void shouldCreateProductWithGeneratedIdWhenProductIdIsNull() {
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(null, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -120,7 +120,7 @@ class ProductTest {
         void shouldThrowExceptionWhenCategoryIdIsNull() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, null)
                     .build();
             });
@@ -131,7 +131,7 @@ class ProductTest {
         void shouldThrowExceptionWhenNameIsNull() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, null, PRODUCT_DESCRIPTION, price, categoryId)
                     .build();
             });
@@ -142,7 +142,7 @@ class ProductTest {
         void shouldThrowExceptionWhenDescriptionIsNull() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, PRODUCT_NAME, null, price, categoryId)
                     .build();
             });
@@ -153,7 +153,7 @@ class ProductTest {
         void shouldThrowExceptionWhenPriceIsNull() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, null, categoryId)
                     .build();
             });
@@ -173,7 +173,7 @@ class ProductTest {
                 .build();
 
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, validSku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -187,7 +187,7 @@ class ProductTest {
         void shouldThrowExceptionWhenSkuIsNull() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, null, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                     .build();
             });
@@ -198,7 +198,7 @@ class ProductTest {
         void shouldThrowExceptionWhenNameIsEmpty() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, "", PRODUCT_DESCRIPTION, price, categoryId)
                     .build();
             });
@@ -209,7 +209,7 @@ class ProductTest {
         void shouldThrowExceptionWhenNameIsTooShort() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, "AB", PRODUCT_DESCRIPTION, price, categoryId)
                     .build();
             });
@@ -220,7 +220,7 @@ class ProductTest {
         void shouldThrowExceptionWhenDescriptionIsEmpty() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, PRODUCT_NAME, "", price, categoryId)
                     .build();
             });
@@ -231,7 +231,7 @@ class ProductTest {
         void shouldThrowExceptionWhenDescriptionIsTooShort() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, PRODUCT_NAME, "Too short", price, categoryId)
                     .build();
             });
@@ -242,7 +242,7 @@ class ProductTest {
         void shouldThrowExceptionWhenNameContainsOnlyWhitespace() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, "   ", PRODUCT_DESCRIPTION, price, categoryId)
                     .build();
             });
@@ -253,7 +253,7 @@ class ProductTest {
         void shouldThrowExceptionWhenDescriptionContainsOnlyWhitespace() {
             // Act & Assert
             assertThrows(IllegalStateException.class, () -> {
-                new Product.ProductBuilder()
+                ProductFactory
                     .builder(productId, sku, PRODUCT_NAME, "   ", price, categoryId)
                     .build();
             });
@@ -267,7 +267,7 @@ class ProductTest {
         @DisplayName("Should activate product successfully")
         void shouldActivateProductSuccessfully() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -283,7 +283,7 @@ class ProductTest {
         @DisplayName("Should throw exception when activating an already active product")
         void shouldThrowExceptionWhenActivatingActiveProduct() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.activate();
@@ -298,7 +298,7 @@ class ProductTest {
         @DisplayName("Should throw exception when activating a discontinued product")
         void shouldThrowExceptionWhenActivatingDiscontinuedProduct() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.discontinue();
@@ -313,7 +313,7 @@ class ProductTest {
         @DisplayName("Should deactivate product successfully")
         void shouldDeactivateProductSuccessfully() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.activate();
@@ -330,7 +330,7 @@ class ProductTest {
         @DisplayName("Should throw exception when deactivating an already inactive product")
         void shouldThrowExceptionWhenDeactivatingInactiveProduct() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.deactivate();
@@ -345,7 +345,7 @@ class ProductTest {
         @DisplayName("Should throw exception when deactivating a discontinued product")
         void shouldThrowExceptionWhenDeactivatingDiscontinuedProduct() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.discontinue();
@@ -360,7 +360,7 @@ class ProductTest {
         @DisplayName("Should discontinue product successfully")
         void shouldDiscontinueProductSuccessfully() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -376,7 +376,7 @@ class ProductTest {
         @DisplayName("Should throw exception when discontinuing an already discontinued product")
         void shouldThrowExceptionWhenDiscontinuingDiscontinuedProduct() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.discontinue();
@@ -395,7 +395,7 @@ class ProductTest {
         @DisplayName("Should update price successfully")
         void shouldUpdatePriceSuccessfully() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -413,7 +413,7 @@ class ProductTest {
         @DisplayName("Should throw exception when updating price with null")
         void shouldThrowExceptionWhenUpdatingPriceWithNull() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -427,7 +427,7 @@ class ProductTest {
         @DisplayName("Should throw exception when updating price with different currency")
         void shouldThrowExceptionWhenUpdatingPriceWithDifferentCurrency() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -447,7 +447,7 @@ class ProductTest {
         @DisplayName("Should add image successfully")
         void shouldAddImageSuccessfully() throws Exception {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -465,7 +465,7 @@ class ProductTest {
         @DisplayName("Should throw exception when adding null image")
         void shouldThrowExceptionWhenAddingNullImage() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -479,7 +479,7 @@ class ProductTest {
         @DisplayName("Should throw exception when adding duplicate image")
         void shouldThrowExceptionWhenAddingDuplicateImage() throws Exception {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -500,7 +500,7 @@ class ProductTest {
         @DisplayName("Should add specification successfully")
         void shouldAddSpecificationSuccessfully() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -518,7 +518,7 @@ class ProductTest {
         @DisplayName("Should throw exception when adding null specification")
         void shouldThrowExceptionWhenAddingNullSpecification() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -532,7 +532,7 @@ class ProductTest {
         @DisplayName("Should throw exception when adding duplicate specification")
         void shouldThrowExceptionWhenAddingDuplicateSpecification() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -553,7 +553,7 @@ class ProductTest {
         @DisplayName("Should create product with valid dates")
         void shouldCreateProductWithValidDates() {
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -566,7 +566,7 @@ class ProductTest {
         @DisplayName("Should update dates when modifying product")
         void shouldUpdateDatesWhenModifyingProduct() throws Exception {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -597,7 +597,7 @@ class ProductTest {
         @DisplayName("Should raise ProductPriceChangedEvent when price is updated")
         void shouldRaiseProductPriceChangedEventWhenPriceIsUpdated() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -619,7 +619,7 @@ class ProductTest {
         @DisplayName("Should raise ProductActivatedEvent when product is activated")
         void shouldRaiseProductActivatedEventWhenProductIsActivated() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -637,7 +637,7 @@ class ProductTest {
         @DisplayName("Should raise ProductDeactivatedEvent when product is deactivated")
         void shouldRaiseProductDeactivatedEventWhenProductIsDeactivated() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
             product.activate();
@@ -656,7 +656,7 @@ class ProductTest {
         @DisplayName("Should raise ProductDiscontinuedEvent when product is discontinued")
         void shouldRaiseProductDiscontinuedEventWhenProductIsDiscontinued() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -678,7 +678,7 @@ class ProductTest {
         @DisplayName("Should initialize empty collections when creating product")
         void shouldInitializeEmptyCollectionsWhenCreatingProduct() {
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -693,7 +693,7 @@ class ProductTest {
         @DisplayName("Should add multiple images successfully")
         void shouldAddMultipleImagesSuccessfully() throws Exception {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -714,7 +714,7 @@ class ProductTest {
         @DisplayName("Should add multiple specifications successfully")
         void shouldAddMultipleSpecificationsSuccessfully() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -735,7 +735,7 @@ class ProductTest {
         @DisplayName("Should maintain collection order when adding items")
         void shouldMaintainCollectionOrderWhenAddingItems() throws Exception {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -763,7 +763,7 @@ class ProductTest {
         @DisplayName("Should return true when comparing same product")
         void shouldReturnTrueWhenComparingSameProduct() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -775,7 +775,7 @@ class ProductTest {
         @DisplayName("Should return false when comparing with null")
         void shouldReturnFalseWhenComparingWithNull() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -787,7 +787,7 @@ class ProductTest {
         @DisplayName("Should return false when comparing with different class")
         void shouldReturnFalseWhenComparingWithDifferentClass() {
             // Arrange
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -799,11 +799,11 @@ class ProductTest {
         @DisplayName("Should return true when comparing products with same id")
         void shouldReturnTrueWhenComparingProductsWithSameId() {
             // Arrange
-            Product product1 = new Product.ProductBuilder()
+            Product product1 = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
-            Product product2 = new Product.ProductBuilder()
+            Product product2 = ProductFactory
                 .builder(productId, sku, "Different Name", "Different Description", price, categoryId)
                 .build();
 
@@ -815,11 +815,11 @@ class ProductTest {
         @DisplayName("Should return false when comparing products with different ids")
         void shouldReturnFalseWhenComparingProductsWithDifferentIds() {
             // Arrange
-            Product product1 = new Product.ProductBuilder()
+            Product product1 = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
-            Product product2 = new Product.ProductBuilder()
+            Product product2 = ProductFactory
                 .builder(new ProductId(), sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
@@ -831,11 +831,11 @@ class ProductTest {
         @DisplayName("Should return same hashCode for equal products")
         void shouldReturnSameHashCodeForEqualProducts() {
             // Arrange
-            Product product1 = new Product.ProductBuilder()
+            Product product1 = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .build();
 
-            Product product2 = new Product.ProductBuilder()
+            Product product2 = ProductFactory
                 .builder(productId, sku, "Different Name", "Different Description", price, categoryId)
                 .build();
 
@@ -854,7 +854,7 @@ class ProductTest {
             Image image = new Image(URI.create(IMAGE_URL));
 
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withImages(Collections.singletonList(image))
                 .build();
@@ -873,7 +873,7 @@ class ProductTest {
             Image image2 = new Image(URI.create("https://example.com/image2.jpg"));
 
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withImages(List.of(image1, image2))
                 .build();
@@ -892,7 +892,7 @@ class ProductTest {
             Specification specification = new Specification(SPECIFICATION_NAME, SPECIFICATION_VALUE);
 
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withSpecifications(Collections.singletonList(specification))
                 .build();
@@ -911,7 +911,7 @@ class ProductTest {
             Specification spec2 = new Specification("Size", "Large");
 
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withSpecifications(List.of(spec1, spec2))
                 .build();
@@ -928,7 +928,7 @@ class ProductTest {
         void shouldThrowExceptionWhenAddingDuplicateImageInBuilder() throws Exception {
             // Arrange
             Image image = new Image(URI.create(IMAGE_URL));
-            Product.ProductBuilder builder = new Product.ProductBuilder()
+            ProductFactory.Builder builder = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withImages(Collections.singletonList(image));
 
@@ -943,7 +943,7 @@ class ProductTest {
         void shouldThrowExceptionWhenAddingDuplicateSpecificationInBuilder() {
             // Arrange
             Specification specification = new Specification(SPECIFICATION_NAME, SPECIFICATION_VALUE);
-            Product.ProductBuilder builder = new Product.ProductBuilder()
+            ProductFactory.Builder builder = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withSpecifications(Collections.singletonList(specification));
 
@@ -957,7 +957,7 @@ class ProductTest {
         @DisplayName("Should throw exception when adding null image in builder")
         void shouldThrowExceptionWhenAddingNullImageInBuilder() {
             // Arrange
-            Product.ProductBuilder builder = new Product.ProductBuilder()
+            ProductFactory.Builder builder = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId);
 
             // Act & Assert
@@ -970,7 +970,7 @@ class ProductTest {
         @DisplayName("Should throw exception when adding null specification in builder")
         void shouldThrowExceptionWhenAddingNullSpecificationInBuilder() {
             // Arrange
-            Product.ProductBuilder builder = new Product.ProductBuilder()
+            ProductFactory.Builder builder = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId);
 
             // Act & Assert
@@ -987,7 +987,7 @@ class ProductTest {
             Specification specification = new Specification(SPECIFICATION_NAME, SPECIFICATION_VALUE);
 
             // Act
-            Product product = new Product.ProductBuilder()
+            Product product = ProductFactory
                 .builder(productId, sku, PRODUCT_NAME, PRODUCT_DESCRIPTION, price, categoryId)
                 .withImages(Collections.singletonList(image))
                 .withSpecifications(Collections.singletonList(specification))

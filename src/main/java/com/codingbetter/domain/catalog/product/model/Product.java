@@ -12,8 +12,6 @@ import com.codingbetter.domain.shared.model.AbstractAggregateRoot;
 import com.codingbetter.domain.shared.model.Entity;
 import com.codingbetter.domain.shared.util.CollectionUtils;
 
-import java.util.ArrayList;
-
 public class Product extends AbstractAggregateRoot implements Entity<Product, ProductId> {
 
     private final ProductId id;
@@ -28,7 +26,7 @@ public class Product extends AbstractAggregateRoot implements Entity<Product, Pr
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private Product(ProductBuilder builder) {
+    Product(ProductFactory.Builder builder) {
         this.id = builder.id;
         this.sku = builder.sku;
         this.name = builder.name;
@@ -149,66 +147,5 @@ public class Product extends AbstractAggregateRoot implements Entity<Product, Pr
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    public static class ProductBuilder {
-        private ProductId id;
-        private Sku sku;
-        private String name;
-        private String description;
-        private Money price;
-        private ProductStatus status;
-        private CategoryId categoryId;
-        private List<Image> images;
-        private List<Specification> specifications;
-        private LocalDateTime createdAt;
-
-        public ProductBuilder builder(ProductId id, Sku sku, String name, String description, Money price, CategoryId categoryId) {
-            this.id = id;
-            this.sku = sku;
-            this.name = name;
-            this.description = description;
-            this.price = price;
-            this.categoryId = categoryId;
-            this.createdAt = LocalDateTime.now();
-            this.images = new ArrayList<>();
-            this.specifications = new ArrayList<>();
-            return this;
-        }
-
-        public ProductBuilder withImages(List<Image> images) {
-            this.images = CollectionUtils.initializeList(this.images);
-            images.forEach(image -> {
-                ProductValidations.validateImage(image, this.images);
-                this.images.add(image);
-            });
-            return this;
-        }
-
-        public ProductBuilder withSpecifications(List<Specification> specifications) {
-            this.specifications = CollectionUtils.initializeList(this.specifications);
-            specifications.forEach(specification -> {
-                ProductValidations.validateSpecification(specification, this.specifications);
-                this.specifications.add(specification);
-            });
-            return this;
-        }
-
-        public ProductBuilder withStatus(ProductStatus status) {
-            this.status = status;
-            return this;
-        }
-
-        public Product build() {
-            if (id == null) {
-                id = new ProductId();
-            }
-            if (status == null) {
-                status = ProductStatus.DRAFT;
-            }
-
-            ProductValidations.validateProductCreation(id, sku, name, description, price, status, categoryId, createdAt);
-            return new Product(this);
-        }
     }
 }

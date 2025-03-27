@@ -1,9 +1,7 @@
 package com.codingbetter.infrastructure.persistence.mapper;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
@@ -18,6 +16,7 @@ import com.codingbetter.domain.catalog.category.model.CategoryId;
 import com.codingbetter.domain.catalog.product.model.Image;
 import com.codingbetter.domain.catalog.product.model.Money;
 import com.codingbetter.domain.catalog.product.model.Product;
+import com.codingbetter.domain.catalog.product.model.ProductFactory;
 import com.codingbetter.domain.catalog.product.model.ProductId;
 import com.codingbetter.domain.catalog.product.model.ProductStatus;
 import com.codingbetter.domain.catalog.product.model.Sku;
@@ -43,7 +42,7 @@ public class InfraProductMapper {
         
         return ProductEntity.builder()
                 .id(product.getId().getValue().getUuid().toString())
-                .sku(product.getSku().getId().toString())
+                .sku(product.getSku().getId().getValue())
                 .name(product.getName())
                 .description(product.getDescription())
                 .categoryId(product.getCategoryId().getValue().toString())
@@ -69,15 +68,13 @@ public class InfraProductMapper {
             return null;
         }
         
-        Product.ProductBuilder builder = new Product.ProductBuilder()
-                .builder(
+        ProductFactory.Builder builder = ProductFactory.builder(
                     new ProductId(UUID.fromString(productEntity.getId())),
                     Sku.fromValue(productEntity.getSku()),
                     productEntity.getName(),
                     productEntity.getDescription(),
                     new Money(productEntity.getPrice(), Currency.getInstance(productEntity.getCurrency())),
-                    new CategoryId(UUID.fromString(productEntity.getCategoryId()))
-                )
+                    new CategoryId(UUID.fromString(productEntity.getCategoryId())))
                 .withStatus(ProductStatus.valueOf(productEntity.getStatus()));
         
         if (productEntity.getImages() != null && !productEntity.getImages().isEmpty()) {

@@ -16,8 +16,8 @@ import com.codingbetter.domain.catalog.product.model.Image;
 import com.codingbetter.domain.catalog.product.model.Money;
 import com.codingbetter.domain.catalog.product.model.Product;
 import com.codingbetter.domain.catalog.product.model.ProductId;
+import com.codingbetter.domain.catalog.product.model.ProductRepository;
 import com.codingbetter.domain.catalog.product.model.Specification;
-import com.codingbetter.domain.catalog.product.repository.ProductRepository;
 import com.codingbetter.domain.shared.event.DomainEventPublisher;
 import com.codingbetter.domain.shared.model.Page;
 

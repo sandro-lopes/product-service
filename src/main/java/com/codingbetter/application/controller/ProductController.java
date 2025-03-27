@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codingbetter.application.controller.request.CreateProductRequest;
 import com.codingbetter.application.controller.response.ProductResponse;
 import com.codingbetter.application.controller.response.PageResponse;
-import com.codingbetter.application.controller.response.ProductResponse;
 import com.codingbetter.application.usecase.ActivateProductUseCase;
 import com.codingbetter.application.usecase.CreateProductUseCase;
 import com.codingbetter.application.usecase.SearchProductsUseCase;

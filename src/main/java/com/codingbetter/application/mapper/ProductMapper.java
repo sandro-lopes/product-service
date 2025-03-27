@@ -21,6 +21,7 @@ import com.codingbetter.domain.catalog.category.model.CategoryId;
 import com.codingbetter.domain.catalog.product.model.Image;
 import com.codingbetter.domain.catalog.product.model.Money;
 import com.codingbetter.domain.catalog.product.model.Product;
+import com.codingbetter.domain.catalog.product.model.ProductFactory;
 import com.codingbetter.domain.catalog.product.model.ProductId;
 import com.codingbetter.domain.catalog.product.model.ProductStatus;
 import com.codingbetter.domain.catalog.product.model.Sku;
@@ -58,19 +59,25 @@ public interface ProductMapper {
             return null;
         }
         
-        return new Product.ProductBuilder()
-                .builder(
+        return ProductFactory.builder(
                     new ProductId(),
                     Sku.fromValue(request.getSku()),
                     request.getName(),
                     request.getDescription(),
                     new Money(request.getPrice(), Currency.getInstance(request.getCurrency())),
-                    new CategoryId(request.getCategoryId())
-                )
+                    new CategoryId(request.getCategoryId()))
                 .withStatus(ProductStatus.DRAFT)
-                .withImages(request.getImages().stream().map(url -> new Image(URI.create(url))).collect(Collectors.toList()))
-                .withSpecifications(request.getSpecifications().entrySet().stream().map(entry -> new Specification(entry.getKey(), entry.getValue())).collect(Collectors.toList()))
+                .withImages(convertImages(request.getImages()))
+                .withSpecifications(convertSpecifications(request.getSpecifications()))
                 .build();
+    }
+
+    default List<Image> convertImages(List<String> images) {
+        return images.stream().map(url -> new Image(URI.create(url))).collect(Collectors.toList());
+    }
+
+    default List<Specification> convertSpecifications(Map<String, String> specifications) {
+        return specifications.entrySet().stream().map(entry -> new Specification(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
 
     // Custom mapping methods
@@ -82,7 +89,7 @@ public interface ProductMapper {
 
     @Named("skuToString")
     default String skuToString(Sku sku) {
-        return sku.getId().toString();
+        return sku.getId().getValue();
     }
 
     @Named("categoryIdToString")
