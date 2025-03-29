@@ -3,11 +3,11 @@ package com.codingbetter.application.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.codingbetter.application.controller.mapper.PageMapper;
+import com.codingbetter.application.controller.mapper.ProductMapper;
 import com.codingbetter.application.controller.request.CreateProductRequest;
 import com.codingbetter.application.controller.response.ProductResponse;
 import com.codingbetter.application.controller.response.PageResponse;
-import com.codingbetter.application.mapper.PageMapper;
-import com.codingbetter.application.mapper.ProductMapper;
 import com.codingbetter.application.usecase.ActivateProductUseCase;
 import com.codingbetter.application.usecase.CreateProductUseCase;
 import com.codingbetter.application.usecase.SearchProductsUseCase;
@@ -25,9 +25,10 @@ import java.util.UUID;
 
 @Service
 public class ProductApplicationService implements CreateProductUseCase, ActivateProductUseCase, SearchProductsUseCase {
+    
+    private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final DomainEventPublisher eventPublisher;
-    private final ProductMapper productMapper;
 
     public ProductApplicationService(ProductRepository productRepository, DomainEventPublisher eventPublisher, ProductMapper productMapper) {
         this.productRepository = productRepository;
@@ -89,14 +90,14 @@ public class ProductApplicationService implements CreateProductUseCase, Activate
         productRepository.save(product);
         publishDomainEvents(product);
     }
-    
+
     private void publishDomainEvents(Product product) {
         product.getDomainEvents().forEach(eventPublisher::publish);
         product.clearDomainEvents();
     }
 
     @FunctionalInterface
-    private interface ProductOperation {
+    public interface ProductOperation {
         void execute(Product product);
     }
 }

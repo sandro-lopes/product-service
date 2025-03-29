@@ -1,5 +1,6 @@
 package com.codingbetter.application.controller.response;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,9 +20,6 @@ public class PageResponse<T> {
     private boolean hasNext;
     private boolean hasPrevious;
     
-    public PageResponse() {
-    }
-    
     public PageResponse(List<T> content, int size, long totalElements, int totalPages, 
                   int page, int pageElements, boolean first, boolean last, 
                   boolean hasNext, boolean hasPrevious) {
@@ -35,6 +33,27 @@ public class PageResponse<T> {
         this.last = last;
         this.hasNext = hasNext;
         this.hasPrevious = hasPrevious;
+    }
+
+    /**
+     * Creates an empty page response.
+     *
+     * @param <T> Type of elements in the page
+     * @return Empty page response
+     */
+    public static <T> PageResponse<T> empty() {
+        return new PageResponse<>(
+            Collections.emptyList(),
+            0,
+            0,
+            0,
+            0,
+            0,
+            true,
+            true,
+            false,
+            false
+        );
     }
     
     public List<T> getContent() {

@@ -1,4 +1,4 @@
-package com.codingbetter.domain.shared.util;
+package com.codingbetter.domain.catalog.utils;
 
 import java.util.ArrayList;
 import java.util.List;

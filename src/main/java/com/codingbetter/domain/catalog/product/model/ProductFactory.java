@@ -1,7 +1,7 @@
 package com.codingbetter.domain.catalog.product.model;
 
 import com.codingbetter.domain.catalog.category.model.CategoryId;
-import com.codingbetter.domain.shared.util.CollectionUtils;
+import com.codingbetter.domain.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

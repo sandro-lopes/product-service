@@ -1,4 +1,4 @@
-package com.codingbetter.application.mapper;
+package com.codingbetter.application.controller.mapper;
 
 import java.math.BigDecimal;
 import java.net.URI;

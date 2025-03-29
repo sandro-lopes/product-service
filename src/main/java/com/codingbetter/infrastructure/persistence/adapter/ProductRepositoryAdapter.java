@@ -44,13 +44,13 @@ public class ProductRepositoryAdapter implements ProductRepository {
     public Page<Product> findAll(int page, int size) {
         PageRequest pageable = org.springframework.data.domain.PageRequest.of(page, size);
         org.springframework.data.domain.Page<ProductEntity> mongoPage = productMongoRepository.findAll(pageable);
-        return MongoPageAdapter.toPage(mongoPage, productMapper::toDomain);
+        return SpringDataPageConverter.toPage(mongoPage, productMapper::toDomain);
     }
 
     @Override
     public Page<Product> findByCategory(String categoryId, int page, int size) {
         PageRequest pageable = org.springframework.data.domain.PageRequest.of(page, size);
         org.springframework.data.domain.Page<ProductEntity> mongoPage = productMongoRepository.findByCategoryId(categoryId, pageable);
-        return MongoPageAdapter.toPage(mongoPage, productMapper::toDomain);
+        return SpringDataPageConverter.toPage(mongoPage, productMapper::toDomain);
     }
 } 

@@ -10,7 +10,7 @@ import com.codingbetter.domain.catalog.product.event.ProductDiscontinuedEvent;
 import com.codingbetter.domain.catalog.product.event.ProductPriceChangedEvent;
 import com.codingbetter.domain.shared.model.AbstractAggregateRoot;
 import com.codingbetter.domain.shared.model.Entity;
-import com.codingbetter.domain.shared.util.CollectionUtils;
+import com.codingbetter.domain.util.CollectionUtils;
 
 public class Product extends AbstractAggregateRoot implements Entity<Product, ProductId> {
 

@@ -1,4 +1,4 @@
-package com.codingbetter.application.mapper;
+package com.codingbetter.application.controller.mapper;
 
 import com.codingbetter.application.controller.response.PageResponse;
 import com.codingbetter.domain.shared.model.Page;
@@ -27,7 +27,7 @@ public class PageMapper {
      */
     public static <T, R> PageResponse<R> toResponse(Page<T> page, Function<T, R> mapper) {
         if (page == null) {
-            return new PageResponse<>();
+            return PageResponse.empty();
         }
 
         List<R> content = page.getContent().stream()
@@ -39,8 +39,8 @@ public class PageMapper {
                 page.getSize(),
                 page.getTotalElements(),
                 page.getTotalPages(),
-                page.getPage(),
-                page.getPageElements(),
+                page.getNumber(),
+                page.getSize(),
                 page.isFirst(),
                 page.isLast(),
                 page.hasNext(),
