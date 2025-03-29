@@ -97,7 +97,7 @@ public class ProductApplicationService implements CreateProductUseCase, Activate
     }
 
     @FunctionalInterface
-    public interface ProductOperation {
+    private interface ProductOperation {
         void execute(Product product);
     }
 }
